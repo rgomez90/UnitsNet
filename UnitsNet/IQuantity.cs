@@ -42,4 +42,12 @@ namespace UnitsNet
             get;
         }
     }
+
+    public interface IQuantity<T> : IQuantity where T : IQuantity<T>
+    {
+        T Add(IQuantity<T> quantity);
+        T Substract(IQuantity<T> quantity);
+        T Multiply(double scalar);
+        T Divide(double scalar);
+    }
 }
