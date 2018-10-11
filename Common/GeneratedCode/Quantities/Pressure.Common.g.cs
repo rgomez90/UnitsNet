@@ -59,7 +59,7 @@ namespace UnitsNet
 #if WINDOWS_UWP
     public sealed partial class Pressure : IQuantity
 #else
-    public partial struct Pressure : IQuantity, IComparable, IComparable<Pressure>
+    public partial struct Pressure : IQuantity<Pressure>, IQuantity, IComparable, IComparable<Pressure>
 #endif
     {
         /// <summary>
@@ -1265,5 +1265,28 @@ namespace UnitsNet
         ///     The <see cref="BaseDimensions" /> of this quantity.
         /// </summary>
         public BaseDimensions Dimensions => Pressure.BaseDimensions;
+
+        public Pressure Add(IQuantity<Pressure> quantity)
+        {
+            Pressure pressureStruct = (Pressure)quantity;
+            return new Pressure(this.AsBaseUnit() + pressureStruct.AsBaseUnit(), Pressure.BaseUnit);
+        }
+
+        public Pressure Substract(IQuantity<Pressure> quantity)
+        {
+            Pressure pressureStruct = (Pressure)quantity;
+            return new Pressure(this.AsBaseUnit() - pressureStruct.AsBaseUnit(), Pressure.BaseUnit);
+        }
+
+        public Pressure Multiply(double scalar)
+        {
+            return new Pressure(this.AsBaseUnit() * scalar, Pressure.BaseUnit);
+        }
+
+        public Pressure Divide(double scalar)
+        {
+            if (scalar <= 0) throw new ArgumentException("Only positive values allowed", nameof(scalar));
+            return new Pressure(this.AsBaseUnit() / scalar, Pressure.BaseUnit);
+        }
     }
 }
