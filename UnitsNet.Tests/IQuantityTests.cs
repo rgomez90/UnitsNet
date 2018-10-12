@@ -46,5 +46,13 @@ namespace UnitsNet.Tests
             IQuantity<Pressure> p = pressureSrc;
             Assert.Throws<ArgumentException>(()=>p.Divide(-2));
         }
+
+        [Fact]
+        public static void DividePressureByPressureReturnsCorrectFactor()
+        {
+            IQuantity<Temperature> p = new Temperature(20,TemperatureUnit.DegreeCelsius);
+            IQuantity<Temperature> p2 = new Temperature(40,TemperatureUnit.DegreeCelsius);
+            Assert.Equal(1d, p.Divide(p2));
+        }
     }
 }

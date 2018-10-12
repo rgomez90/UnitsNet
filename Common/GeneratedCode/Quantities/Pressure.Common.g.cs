@@ -1283,10 +1283,17 @@ namespace UnitsNet
             return new Pressure(this.AsBaseUnit() * scalar, Pressure.BaseUnit);
         }
 
+        public double Divide(IQuantity<Pressure> quantity)
+        {
+            return this/(Pressure)quantity;
+        }
+
         public Pressure Divide(double scalar)
         {
             if (scalar <= 0) throw new ArgumentException("Only positive values allowed", nameof(scalar));
             return new Pressure(this.AsBaseUnit() / scalar, Pressure.BaseUnit);
         }
+
+        Pressure IQuantity<Pressure>.Zero => Zero;
     }
 }

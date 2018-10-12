@@ -59,7 +59,7 @@ namespace UnitsNet
 #if WINDOWS_UWP
     public sealed partial class ElectricCurrent : IQuantity
 #else
-    public partial struct ElectricCurrent : IQuantity, IComparable, IComparable<ElectricCurrent>
+    public partial struct ElectricCurrent : IQuantity<ElectricCurrent>, IQuantity, IComparable, IComparable<ElectricCurrent>
 #endif
     {
         /// <summary>
@@ -204,6 +204,35 @@ namespace UnitsNet
         #endregion
 
         #region Static
+
+        public ElectricCurrent Add(IQuantity<ElectricCurrent> quantity)
+        {
+            var ecStruct = (ElectricCurrent) quantity;
+            return new ElectricCurrent(this.AsBaseUnit() + ecStruct.AsBaseUnit(),ElectricCurrent.BaseUnit);
+        }
+
+        public ElectricCurrent Substract(IQuantity<ElectricCurrent> quantity)
+        {
+            var ecStruct = (ElectricCurrent)quantity;
+            return new ElectricCurrent(this.AsBaseUnit() - ecStruct.AsBaseUnit(), ElectricCurrent.BaseUnit);
+        }
+
+        public ElectricCurrent Multiply(double scalar)
+        {
+            return new ElectricCurrent(this.AsBaseUnit() * scalar, ElectricCurrent.BaseUnit);
+        }
+
+        public double Divide(IQuantity<ElectricCurrent> quantity)
+        {
+            return this / (ElectricCurrent) quantity;
+        }
+
+        public ElectricCurrent Divide(double scalar)
+        {
+            return new ElectricCurrent(this.AsBaseUnit() / scalar, ElectricCurrent.BaseUnit);
+        }
+
+        ElectricCurrent IQuantity<ElectricCurrent>.Zero => Zero;
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit Ampere.

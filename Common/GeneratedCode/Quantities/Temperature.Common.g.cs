@@ -59,7 +59,7 @@ namespace UnitsNet
 #if WINDOWS_UWP
     public sealed partial class Temperature : IQuantity
 #else
-    public partial struct Temperature : IQuantity, IComparable, IComparable<Temperature>
+    public partial struct Temperature : IQuantity<Temperature>,IQuantity, IComparable, IComparable<Temperature>
 #endif
     {
         /// <summary>
@@ -204,6 +204,33 @@ namespace UnitsNet
         #endregion
 
         #region Static
+
+        public Temperature Add(IQuantity<Temperature> quantity)
+        {
+            return new Temperature(this.AsBaseUnit() + ((Temperature)quantity).AsBaseUnit(),Temperature.BaseUnit);
+        }
+
+        public Temperature Substract(IQuantity<Temperature> quantity)
+        {
+            return new Temperature(this.AsBaseUnit() - ((Temperature)quantity).AsBaseUnit(), Temperature.BaseUnit);
+        }
+
+        public Temperature Multiply(double scalar)
+        {
+            return new Temperature(this.AsBaseUnit() * scalar, Temperature.BaseUnit);
+        }
+
+        public Temperature Divide(double scalar)
+        {
+            return new Temperature(this.AsBaseUnit() / scalar, Temperature.BaseUnit);
+        }
+
+        public double Divide(IQuantity<Temperature> quantity)
+        {
+            return this.AsBaseUnit() / ((Temperature) quantity).AsBaseUnit();
+        }
+
+        Temperature IQuantity<Temperature>.Zero => Zero;
 
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit Kelvin.

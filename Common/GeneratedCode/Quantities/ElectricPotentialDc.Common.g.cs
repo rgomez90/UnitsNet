@@ -59,7 +59,7 @@ namespace UnitsNet
 #if WINDOWS_UWP
     public sealed partial class ElectricPotentialDc : IQuantity
 #else
-    public partial struct ElectricPotentialDc : IQuantity, IComparable, IComparable<ElectricPotentialDc>
+    public partial struct ElectricPotentialDc : IQuantity<ElectricPotentialDc>, IQuantity, IComparable, IComparable<ElectricPotentialDc>
 #endif
     {
         /// <summary>
@@ -158,7 +158,7 @@ namespace UnitsNet
         /// <summary>
         ///     All units of measurement for the ElectricPotentialDc quantity.
         /// </summary>
-        public static ElectricPotentialDcUnit[] Units { get; } = Enum.GetValues(typeof(ElectricPotentialDcUnit)).Cast<ElectricPotentialDcUnit>().Except(new ElectricPotentialDcUnit[]{ ElectricPotentialDcUnit.Undefined }).ToArray();
+        public static ElectricPotentialDcUnit[] Units { get; } = Enum.GetValues(typeof(ElectricPotentialDcUnit)).Cast<ElectricPotentialDcUnit>().Except(new ElectricPotentialDcUnit[] { ElectricPotentialDcUnit.Undefined }).ToArray();
 
         /// <summary>
         ///     Get ElectricPotentialDc in KilovoltsDc.
@@ -189,6 +189,33 @@ namespace UnitsNet
 
         #region Static
 
+        public ElectricPotentialDc Add(IQuantity<ElectricPotentialDc> quantity)
+        {
+            return new ElectricPotentialDc(this.AsBaseUnit() + ((ElectricPotentialDc)quantity).AsBaseUnit(), ElectricPotentialDc.BaseUnit);
+        }
+
+        public ElectricPotentialDc Substract(IQuantity<ElectricPotentialDc> quantity)
+        {
+            return new ElectricPotentialDc(this.AsBaseUnit() - ((ElectricPotentialDc)quantity).AsBaseUnit(), ElectricPotentialDc.BaseUnit);
+        }
+
+        public ElectricPotentialDc Multiply(double scalar)
+        {
+            return new ElectricPotentialDc(this.AsBaseUnit() * scalar, ElectricPotentialDc.BaseUnit);
+        }
+
+        public double Divide(IQuantity<ElectricPotentialDc> quantity)
+        {
+            return this / (ElectricPotentialDc) quantity;
+        }
+
+        public ElectricPotentialDc Divide(double scalar)
+        {
+            return new ElectricPotentialDc(this.AsBaseUnit() / scalar, ElectricPotentialDc.BaseUnit);
+        }
+
+        ElectricPotentialDc IQuantity<ElectricPotentialDc>.Zero => Zero;
+
         /// <summary>
         ///     Gets an instance of this quantity with a value of 0 in the base unit VoltDc.
         /// </summary>
@@ -204,7 +231,7 @@ namespace UnitsNet
         public static ElectricPotentialDc FromKilovoltsDc(QuantityValue kilovoltsdc)
 #endif
         {
-            double value = (double) kilovoltsdc;
+            double value = (double)kilovoltsdc;
             return new ElectricPotentialDc(value, ElectricPotentialDcUnit.KilovoltDc);
         }
 
@@ -218,7 +245,7 @@ namespace UnitsNet
         public static ElectricPotentialDc FromMegavoltsDc(QuantityValue megavoltsdc)
 #endif
         {
-            double value = (double) megavoltsdc;
+            double value = (double)megavoltsdc;
             return new ElectricPotentialDc(value, ElectricPotentialDcUnit.MegavoltDc);
         }
 
@@ -232,7 +259,7 @@ namespace UnitsNet
         public static ElectricPotentialDc FromMicrovoltsDc(QuantityValue microvoltsdc)
 #endif
         {
-            double value = (double) microvoltsdc;
+            double value = (double)microvoltsdc;
             return new ElectricPotentialDc(value, ElectricPotentialDcUnit.MicrovoltDc);
         }
 
@@ -246,7 +273,7 @@ namespace UnitsNet
         public static ElectricPotentialDc FromMillivoltsDc(QuantityValue millivoltsdc)
 #endif
         {
-            double value = (double) millivoltsdc;
+            double value = (double)millivoltsdc;
             return new ElectricPotentialDc(value, ElectricPotentialDcUnit.MillivoltDc);
         }
 
@@ -260,7 +287,7 @@ namespace UnitsNet
         public static ElectricPotentialDc FromVoltsDc(QuantityValue voltsdc)
 #endif
         {
-            double value = (double) voltsdc;
+            double value = (double)voltsdc;
             return new ElectricPotentialDc(value, ElectricPotentialDcUnit.VoltDc);
         }
 
@@ -299,8 +326,8 @@ namespace UnitsNet
 
         public int CompareTo(object obj)
         {
-            if(obj is null) throw new ArgumentNullException(nameof(obj));
-            if(!(obj is ElectricPotentialDc)) throw new ArgumentException("Expected type ElectricPotentialDc.", nameof(obj));
+            if (obj is null) throw new ArgumentNullException(nameof(obj));
+            if (!(obj is ElectricPotentialDc)) throw new ArgumentException("Expected type ElectricPotentialDc.", nameof(obj));
 
             return CompareTo((ElectricPotentialDc)obj);
         }
@@ -319,7 +346,7 @@ namespace UnitsNet
         [Obsolete("It is not safe to compare equality due to using System.Double as the internal representation. It is very easy to get slightly different values due to floating point operations. Instead use Equals($quantityName, double, ComparisonType) to provide the max allowed absolute or relative error.")]
         public override bool Equals(object obj)
         {
-            if(obj is null || !(obj is ElectricPotentialDc))
+            if (obj is null || !(obj is ElectricPotentialDc))
                 return false;
 
             var objQuantity = (ElectricPotentialDc)obj;
@@ -368,7 +395,7 @@ namespace UnitsNet
         /// <returns>True if the absolute difference between the two values is not greater than the specified relative or absolute tolerance.</returns>
         public bool Equals(ElectricPotentialDc other, double tolerance, ComparisonType comparisonType)
         {
-            if(tolerance < 0)
+            if (tolerance < 0)
                 throw new ArgumentOutOfRangeException("tolerance", "Tolerance must be greater than or equal to 0.");
 
             double thisValue = (double)this.Value;
@@ -410,7 +437,7 @@ namespace UnitsNet
         /// <returns>Value converted to the specified unit.</returns>
         public double As(ElectricPotentialDcUnit unit)
         {
-            if(Unit == unit)
+            if (Unit == unit)
                 return Convert.ToDouble(Value);
 
             var converted = AsBaseNumericType(unit);
@@ -434,7 +461,7 @@ namespace UnitsNet
         /// <returns>The value in the base unit representation.</returns>
         private double AsBaseUnit()
         {
-            switch(Unit)
+            switch (Unit)
             {
                 case ElectricPotentialDcUnit.KilovoltDc: return (_value) * 1e3d;
                 case ElectricPotentialDcUnit.MegavoltDc: return (_value) * 1e6d;
@@ -448,12 +475,12 @@ namespace UnitsNet
 
         private double AsBaseNumericType(ElectricPotentialDcUnit unit)
         {
-            if(Unit == unit)
+            if (Unit == unit)
                 return _value;
 
             var baseUnitValue = AsBaseUnit();
 
-            switch(unit)
+            switch (unit)
             {
                 case ElectricPotentialDcUnit.KilovoltDc: return (baseUnitValue) / 1e3d;
                 case ElectricPotentialDcUnit.MegavoltDc: return (baseUnitValue) / 1e6d;

@@ -48,6 +48,9 @@ namespace UnitsNet
         T Add(IQuantity<T> quantity);
         T Substract(IQuantity<T> quantity);
         T Multiply(double scalar);
+        double Divide(IQuantity<T> quantity);
         T Divide(double scalar);
+
+        T Zero { get; }
     }
 }
